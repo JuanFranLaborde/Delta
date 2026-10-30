@@ -1,0 +1,9 @@
+# Texto con fin de línea normalizado
+* text=auto
+
+# Binarios: nunca convertir saltos de línea
+*.pdf  binary
+*.webp binary
+*.jpg  binary
+*.jpeg binary
+*.png  binary

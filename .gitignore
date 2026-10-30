@@ -1,0 +1,14 @@
+# Configuración local de herramientas
+.claude/
+
+# Material de origen que la página no usa (renders anteriores, con botón y patas de dos tramos)
+WhatsApp Image *.jpeg
+Imagen de ChatGPT *.png
+
+# Folleto A5 (pieza aparte)
+folleto/
+
+# Archivos del sistema
+Thumbs.db
+Desktop.ini
+.DS_Store

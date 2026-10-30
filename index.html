@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DELTA — Asiento portátil para fotografía de naturaleza</title>
+  <meta name="description" content="DELTA es un asiento individual portátil, triangular y plegable, impreso en 3D para fotógrafos de naturaleza que pasan horas en un mismo lugar.">
+  <meta name="theme-color" content="#0f110e">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DELTA — Un mejor punto de vista en la naturaleza">
+  <meta property="og:description" content="Asiento portátil, triangular y plegable para fotografía de naturaleza, con tres patas de un solo tramo.">
+  <meta property="og:image" content="assets/img/og-delta.jpg">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preload" as="image" href="assets/img/delta-desplegado.webp" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js', 'is-loading');</script>
+</head>
+<body>
+  <a class="skip" href="#concepto">Saltar al contenido</a>
+
+  <!-- Símbolos reutilizables: marca Δ y logotipo -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="delta-mark" viewBox="0 0 100 88">
+        <g fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round">
+          <path d="M48.5 6.6 10.9 71.7h13.9L48.5 30.6z"/>
+          <path d="M51.5 6.6 89.1 71.7H75.2L51.5 30.6z"/>
+          <path d="M9.2 74.7h81.6l5.2 9H4z"/>
+        </g>
+      </symbol>
+      <symbol id="delta-word" viewBox="0 0 316 40">
+        <g fill="currentColor">
+          <path fill-rule="evenodd" d="M0 0h30a18 18 0 0 1 18 18v4a18 18 0 0 1-18 18H0zM8 8v9H0v6h8v9h22a10 10 0 0 0 10-10v-4A10 10 0 0 0 30 8z"/>
+          <path d="M67 0h48v8H75v8h32v8H75v8h40v8H67z"/>
+          <path d="M134 0h8v32h40v8h-48z"/>
+          <path d="M201 0h48v8h-20v32h-8V8h-20z"/>
+          <path d="M268 40 288 0h8l20 40h-9L292 9.5 277 40z"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Loader: el Δ se dibuja y se abre como un obturador -->
+  <div class="loader" aria-hidden="true">
+    <svg class="loader__mark" viewBox="-2 -2 104 92">
+      <path class="loader__bar" pathLength="1" d="M48.5 6.6 10.9 71.7h13.9L48.5 30.6z"/>
+      <path class="loader__bar" pathLength="1" d="M51.5 6.6 89.1 71.7H75.2L51.5 30.6z"/>
+      <path class="loader__bar" pathLength="1" d="M9.2 74.7h81.6l5.2 9H4z"/>
+    </svg>
+    <p class="loader__meta"><span>Enfocando</span><span class="loader__pct">000</span></p>
+    <span class="loader__line"><i></i></span>
+  </div>
+
+  <div class="progress" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="cursor__label"></span></div>
+
+  <!-- Navegación -->
+  <header class="nav" data-theme="dark">
+    <a class="nav__brand" href="#inicio" aria-label="DELTA, volver al inicio">
+      <svg class="nav__mark"><use href="#delta-mark"/></svg>
+      <svg class="nav__word"><use href="#delta-word"/></svg>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#objeto">Objeto</a>
+      <a href="#despliegue">Secuencia</a>
+      <a href="#ficha">Ficha</a>
+      <a href="#diseno">Diseño</a>
+      <a href="#proceso">Proceso</a>
+    </nav>
+    <a class="btn btn--line nav__cta" href="Panel%20Comercial%20DELTA.pdf" target="_blank" rel="noopener">Panel comercial</a>
+    <button class="nav__toggle" type="button" aria-haspopup="dialog" aria-controls="menu"><span>Menú</span><i></i></button>
+  </header>
+
+  <dialog class="menu" id="menu" aria-label="Menú">
+    <button class="menu__close" type="button">Cerrar</button>
+    <nav aria-label="Menú móvil">
+      <a href="#objeto">Objeto</a>
+      <a href="#despliegue">Secuencia</a>
+      <a href="#ficha">Ficha</a>
+      <a href="#diseno">Diseño</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p class="menu__foot">Taller de Diseño Industrial 3B · FDA · UNLP</p>
+  </dialog>
+
+  <main>
+    <!-- ============ HERO: visor + obturador Δ ============ -->
+    <section class="hero" id="inicio" data-theme="dark" aria-roledescription="carrusel" aria-label="DELTA en uso">
+      <div class="hero__slides">
+        <figure class="hero__slide is-active" role="group" aria-roledescription="diapositiva" aria-label="1 de 3: Vista" data-hud="f/8|1/250 s|ISO 200">
+          <img src="assets/img/delta-desplegado.webp" alt="DELTA desplegado sobre terreno rocoso, con tres patas de un solo tramo, frente a un lago con islas y montañas nevadas al atardecer" width="1361" height="1156" fetchpriority="high" style="--pos: 50% 55%">
+        </figure>
+        <figure class="hero__slide" role="group" aria-roledescription="diapositiva" aria-label="2 de 3: Observar" aria-hidden="true" data-hud="f/5.6|1/500 s|ISO 100">
+          <img src="assets/img/delta-usuario.webp" alt="Fotógrafo sentado en DELTA sobre una roca, frente a un lago con islas y montañas nevadas al atardecer" width="1362" height="1155" fetchpriority="low" loading="lazy" style="--pos: 58% 40%">
+        </figure>
+        <figure class="hero__slide" role="group" aria-roledescription="diapositiva" aria-label="3 de 3: Compacto" aria-hidden="true" data-hud="f/4|1/1000 s|ISO 400">
+          <img src="assets/img/delta-mochila.webp" alt="DELTA plegado, colgado con un mosquetón de la mochila de un fotógrafo junto al trípode" width="1362" height="1155" fetchpriority="low" loading="lazy" style="--pos: 38% 50%">
+        </figure>
+      </div>
+      <div class="hero__shade" aria-hidden="true"></div>
+
+      <div class="hud" aria-hidden="true">
+        <span class="hud__c hud__c--tl"></span><span class="hud__c hud__c--tr"></span>
+        <span class="hud__c hud__c--bl"></span><span class="hud__c hud__c--br"></span>
+        <ul class="hud__words"><li>Comodidad</li><li>Estabilidad</li><li>Libertad</li></ul>
+        <p class="hud__status"><span class="hud__dot"></span>AF-C <span>·</span> RAW <span>·</span> <span class="hud__frame">01/03</span></p>
+        <div class="hud__af">
+          <i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i class="is-on"></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+
+      <div class="hero__content">
+        <div class="hero__left">
+          <p class="eyebrow hero__eyebrow">Asiento portátil · Fotografía de naturaleza</p>
+          <h1 class="hero__title">
+            <span class="sr-only">DELTA, asiento portátil para fotografía de naturaleza</span>
+            <span class="hero__word" aria-hidden="true">DELTA</span>
+          </h1>
+        </div>
+        <div class="hero__right">
+          <div class="hero__captions" aria-live="off">
+            <p class="hero__caption is-active">Un mejor punto de vista en la naturaleza.</p>
+            <p class="hero__caption">Comodidad y estabilidad durante largas esperas.</p>
+            <p class="hero__caption">Diseñado para acompañarte en cada salida.</p>
+          </div>
+          <div class="hero__ctas">
+            <a class="btn btn--accent" href="#despliegue" data-cursor="Ver">Ver cómo se despliega <svg class="btn__icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6.5 6 10.5 10 6.5"/></svg></a>
+            <a class="btn btn--ghost" href="#objeto">Conocer DELTA</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__bar">
+        <p class="hud-data" aria-hidden="true"><span data-hud-i="0">f/8</span><span data-hud-i="1">1/250 s</span><span data-hud-i="2">ISO 200</span><span class="hud-data__bat"><i></i><i></i><i></i><i></i></span></p>
+        <div class="hero__tabs" role="group" aria-label="Elegir diapositiva">
+          <button class="hero__tab is-active" type="button" data-go="0" aria-current="true" aria-label="Diapositiva 1: Vista"><span>01</span> Vista<i><b></b></i></button>
+          <button class="hero__tab" type="button" data-go="1" aria-label="Diapositiva 2: Observar"><span>02</span> Observar<i><b></b></i></button>
+          <button class="hero__tab" type="button" data-go="2" aria-label="Diapositiva 3: Compacto"><span>03</span> Compacto<i><b></b></i></button>
+          <button class="hero__pause" type="button" aria-label="Pausar presentación"><svg viewBox="0 0 12 12" aria-hidden="true"><path class="i-pause" d="M3.5 2v8M8.5 2v8"/><path class="i-play" d="M3 1.8v8.4L10 6z"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONCEPTO ============ -->
+    <section class="concept" id="concepto" data-theme="dark" aria-labelledby="concept-title">
+      <div class="concept__bg parallax" aria-hidden="true"><img src="assets/img/bosque-blur.webp" alt="" width="1100" height="1650" loading="lazy"></div>
+      <div class="wrap">
+        <h2 class="eyebrow concept__eyebrow" id="concept-title">Observar es permanecer</h2>
+        <p class="concept__text" data-words>DELTA es un asiento individual portátil diseñado para <em>fotógrafos de naturaleza</em> que requieren permanecer durante largos períodos en un mismo lugar con <em>comodidad</em> y <em>estabilidad</em>.</p>
+        <ul class="pillars">
+          <li class="pillar reveal">
+            <span class="pillar__word" data-fill>Ligero</span>
+            <p>Sustracciones estratégicas alivian el peso de la pieza y reducen el material de impresión.</p>
+          </li>
+          <li class="pillar reveal">
+            <span class="pillar__word" data-fill>Resistente</span>
+            <p>Impreso íntegramente en 3D con un polímero de alta resistencia.</p>
+          </li>
+          <li class="pillar reveal">
+            <span class="pillar__word" data-fill>Funcional</span>
+            <p>Se pliega para viajar en la mochila y se despliega donde encontrás tu lugar.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OBJETO: render + puntos de interés ============ -->
+    <section class="object" id="objeto" data-theme="light" aria-labelledby="object-title">
+      <div class="wrap object__head">
+        <div>
+          <p class="eyebrow">El objeto</p>
+          <h2 class="display" id="object-title" data-split>Una única <strong>pieza</strong></h2>
+        </div>
+        <p class="lead reveal">Forma, ergonomía y fabricación integradas en un solo objeto, aprovechando lo que permite la impresión 3D.</p>
+      </div>
+      <div class="wrap object__stage">
+        <figure class="object__figure" data-tilt>
+          <div class="object__img">
+            <img src="assets/img/delta-render.webp" alt="Render de estudio de DELTA desplegado, visto desde abajo: carcasa oliva, placa inferior grafito con vaciados y tres patas de un solo tramo" width="754" height="524" loading="lazy">
+          </div>
+          <button class="hotspot" type="button" style="--x:52%;--y:17%" data-spot="0" aria-label="Superficie ergonómica"><span>1</span></button>
+          <button class="hotspot" type="button" style="--x:44%;--y:50%" data-spot="1" aria-label="Vaciados estratégicos"><span>2</span></button>
+          <button class="hotspot" type="button" style="--x:86%;--y:64%" data-spot="2" aria-label="Patas de un solo tramo"><span>3</span></button>
+          <button class="hotspot" type="button" style="--x:26%;--y:80%" data-spot="3" aria-label="Apoyos firmes"><span>4</span></button>
+          <figcaption class="object__cap">Render de producto · vista inferior, desplegado</figcaption>
+        </figure>
+        <ul class="specs-list">
+          <li data-spot="0"><span class="specs-list__n">1</span><div><h3>Superficie ergonómica</h3><p>Curvaturas que acompañan la anatomía y reparten las presiones de apoyo durante horas de espera.</p></div></li>
+          <li data-spot="1"><span class="specs-list__n">2</span><div><h3>Vaciados estratégicos</h3><p>Alivian el peso, reducen el material de impresión y generan zonas de agarre.</p></div></li>
+          <li data-spot="2"><span class="specs-list__n">3</span><div><h3>Patas de un solo tramo</h3><p>Tres patas de una sola pieza que se alojan en la base al plegarlo y forman un trípode firme al desplegarlo.</p></div></li>
+          <li data-spot="3"><span class="specs-list__n">4</span><div><h3>Apoyos firmes</h3><p>La base triangular asienta estable sobre roca, tierra o pasto.</p></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ ATRIBUTOS: recorrido horizontal ============ -->
+    <section class="attrs" id="atributos" data-theme="dark" aria-labelledby="attrs-title">
+      <div class="attrs__pin">
+        <div class="attrs__head wrap">
+          <h2 class="eyebrow" id="attrs-title">Compacto · Estable · Cómodo</h2>
+          <span class="attrs__meter" aria-hidden="true"><i></i></span>
+        </div>
+        <div class="attrs__track">
+          <article class="attr">
+            <div class="attr__media"><img src="assets/img/delta-plegado.webp" alt="DELTA plegado sobre una roca: las tres patas quedan alojadas en la base" width="1504" height="1046" loading="lazy"></div>
+            <div class="attr__body">
+              <p class="eyebrow">Transporte</p>
+              <h3 class="attr__title">Compacto</h3>
+              <p>Plegado, las tres patas quedan alojadas en la base y viaja colgado de la mochila junto al trípode.</p>
+            </div>
+          </article>
+          <article class="attr">
+            <div class="attr__media attr__media--low"><img src="assets/img/delta-terreno.webp" alt="DELTA desplegado sobre una roca, con las tres patas de un solo tramo apoyadas en el suelo" width="1414" height="2000" loading="lazy"></div>
+            <div class="attr__body">
+              <p class="eyebrow">Apoyo</p>
+              <h3 class="attr__title">Estable</h3>
+              <p>Su base triangular brinda firmeza en todo terreno: roca, tierra o pasto.</p>
+            </div>
+          </article>
+          <article class="attr">
+            <div class="attr__media attr__media--studio"><img src="assets/img/delta-render.webp" alt="Perfil de DELTA desplegado: la curva del asiento y las tres patas de un solo tramo" width="754" height="524" loading="lazy"></div>
+            <div class="attr__body">
+              <p class="eyebrow">Postura</p>
+              <h3 class="attr__title">Cómodo</h3>
+              <p>Curvaturas que acompañan la anatomía y una altura pensada para largas esperas.</p>
+            </div>
+          </article>
+          <a class="attr attr--next" href="#despliegue" data-cursor="Bajar">
+            <span class="eyebrow">Siguiente</span>
+            <span class="attr__title">Mirá cómo<br>se despliega</span>
+            <svg class="attr__arrow" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6v34M10 27l14 14 14-14"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECUENCIA DE USO: fotogramas guiados por scroll ============ -->
+    <section class="seq" id="despliegue" data-theme="light" aria-labelledby="seq-title">
+      <div class="seq__pin">
+        <div class="band" aria-hidden="true">
+          <div class="band__track">
+            <span>Secuencia de uso</span><span>Secuencia de uso</span><span>Secuencia de uso</span><span>Secuencia de uso</span>
+            <span>Secuencia de uso</span><span>Secuencia de uso</span><span>Secuencia de uso</span><span>Secuencia de uso</span>
+          </div>
+        </div>
+        <h2 class="sr-only" id="seq-title">Secuencia de uso</h2>
+        <div class="seq__grid wrap">
+          <div class="seq__frame">
+            <span class="vf vf--tl"></span><span class="vf vf--tr"></span><span class="vf vf--bl"></span><span class="vf vf--br"></span>
+            <div class="seq__stage">
+              <svg class="side" viewBox="0 0 680 440" role="img" aria-labelledby="side-t">
+                <title id="side-t">Vista lateral de DELTA: plegado, se toma, se despliegan sus tres patas de un solo tramo y queda apoyado con el asiento a 280 mm del suelo</title>
+                <defs>
+                  <linearGradient id="g-shell" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#b6a674"/><stop offset="1" stop-color="#83744d"/>
+                  </linearGradient>
+                  <linearGradient id="g-leg" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#3a3b35"/><stop offset=".5" stop-color="#5c5d55"/><stop offset="1" stop-color="#33342e"/>
+                  </linearGradient>
+                </defs>
+                <line class="side__ground" x1="6" y1="380" x2="604" y2="380"/>
+                <ellipse class="side__shadow" cx="300" cy="384" rx="160" ry="6"/>
+                <g class="side__seat">
+                  <g class="side__leg side__leg--c">
+                    <path fill="#2b2c27" d="M284 196a6 6 0 0 1 6-6h20a6 6 0 0 1 6 6l-3 170h-26z"/>
+                    <rect x="286" y="364" width="28" height="16" rx="6" fill="#141412"/>
+                  </g>
+                  <g class="side__leg side__leg--l">
+                    <path fill="url(#g-leg)" d="M166 192a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6l-5 211h-30z"/>
+                    <rect x="170" y="401" width="32" height="16" rx="6" fill="#141412"/>
+                  </g>
+                  <g class="side__leg side__leg--r">
+                    <path fill="url(#g-leg)" d="M394 192a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6l-5 211h-30z"/>
+                    <rect x="398" y="401" width="32" height="16" rx="6" fill="#141412"/>
+                  </g>
+                  <path class="side__body" fill="url(#g-shell)" d="M150 118c0-18 10-26 28-26 52 0 82 18 122 18s70-18 122-18c18 0 28 8 28 26v54H150z"/>
+                  <path class="side__plate" fill="#2c2d29" d="M150 168h300v24c0 10-7 16-17 16H167c-10 0-17-6-17-16z"/>
+                  <path class="side__grip" d="M163 111c2-9 8-12 17-12 51 0 81 17 120 17s69-17 120-17c9 0 15 3 17 12"/>
+                </g>
+                <g class="side__dim">
+                  <path class="side__dimline" pathLength="1" d="M622 92v288M612 92h20M612 380h20"/>
+                  <text x="648" y="236" transform="rotate(-90 648 236)" text-anchor="middle">280 mm</text>
+                </g>
+              </svg>
+            </div>
+            <p class="seq__meta" aria-hidden="true"><span class="seq__rec"></span>Vista lateral · paso <span class="seq__fnum">1</span>/4</p>
+          </div>
+          <ol class="seq__steps">
+            <li class="seq__step is-active">
+              <p class="seq__count"><span>01</span> / 04</p>
+              <h3 class="seq__title">Tomar</h3>
+              <p class="seq__desc">Plegado, DELTA es una pieza compacta que viaja colgada de la mochila. Tomalo con las dos manos.</p>
+            </li>
+            <li class="seq__step">
+              <p class="seq__count"><span>02</span> / 04</p>
+              <h3 class="seq__title">Desplegar</h3>
+              <p class="seq__desc">Abrí las tres patas desde la base: cada una es de un solo tramo.</p>
+            </li>
+            <li class="seq__step">
+              <p class="seq__count"><span>03</span> / 04</p>
+              <h3 class="seq__title">Apoyar</h3>
+              <p class="seq__desc">La base triangular asienta firme sobre roca, tierra o pasto.</p>
+            </li>
+            <li class="seq__step">
+              <p class="seq__count"><span>04</span> / 04</p>
+              <h3 class="seq__title">Listo</h3>
+              <p class="seq__desc">Un asiento estable a 280 mm del suelo para esperar la toma.</p>
+            </li>
+          </ol>
+        </div>
+        <div class="seq__rail wrap" role="group" aria-label="Ir a un paso">
+          <button type="button" data-step="0"><span>01</span>Tomar</button>
+          <button type="button" data-step="1"><span>02</span>Desplegar</button>
+          <button type="button" data-step="2"><span>03</span>Apoyar</button>
+          <button type="button" data-step="3"><span>04</span>Listo</button>
+          <span class="seq__line" aria-hidden="true"><i></i></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FICHA TÉCNICA ============ -->
+    <section class="ficha" id="ficha" data-theme="dark" aria-labelledby="ficha-title">
+      <div class="wrap ficha__grid">
+        <div class="ficha__intro">
+          <p class="eyebrow">Ficha técnica</p>
+          <h2 class="display" id="ficha-title" data-split>Un solo <strong>tramo</strong></h2>
+          <p class="ficha__copy reveal">Tres patas de una sola pieza, una base triangular de 300 mm por lado y un asiento a 280 mm del suelo. Plegado, DELTA vuelve a ser una pieza compacta, lista para colgar de la mochila.</p>
+        </div>
+
+        <figure class="ficha__top">
+          <svg class="topview" viewBox="0 0 400 370" role="img" aria-labelledby="top-t">
+            <title id="top-t">Vista superior de DELTA: triángulo de 300 mm por lado con una pata en cada vértice</title>
+            <g class="topview__legs">
+              <rect x="-14" y="-40" width="28" height="44" rx="6" transform="translate(200 46)"/>
+              <rect x="-14" y="-40" width="28" height="44" rx="6" transform="translate(55 297) rotate(-120)"/>
+              <rect x="-14" y="-40" width="28" height="44" rx="6" transform="translate(345 297) rotate(120)"/>
+            </g>
+            <path class="draw topview__outer" pathLength="1" d="M182 71.2Q200 40 218 71.2L332 268.8Q350 300 314 300L86 300Q50 300 68 268.8Z"/>
+            <path class="draw topview__inner" pathLength="1" transform="translate(36 38.4) scale(.82)" d="M182 71.2Q200 40 218 71.2L332 268.8Q350 300 314 300L86 300Q50 300 68 268.8Z"/>
+            <g class="topview__dims">
+              <path class="draw" pathLength="1" d="M175.8 26 25.8 286M50 330h300M224.2 26l150 260"/>
+              <text x="86" y="146" transform="rotate(-60 86 146)" text-anchor="middle">300 mm</text>
+              <text x="314" y="146" transform="rotate(60 314 146)" text-anchor="middle">300 mm</text>
+              <text x="200" y="356" text-anchor="middle">300 mm</text>
+            </g>
+          </svg>
+          <figcaption class="ficha__cap">Vista superior</figcaption>
+        </figure>
+
+        <div class="ficha__spec">
+          <h3 class="eyebrow">Especificaciones</h3>
+          <dl class="specs">
+            <div><dt>Tipo</dt><dd>Asiento individual portátil</dd></div>
+            <div><dt>Base</dt><dd>Triangular, <b data-count="300">300</b> mm por lado</dd></div>
+            <div><dt>Altura</dt><dd><b data-count="280">280</b> mm desplegado</dd></div>
+            <div><dt>Patas</dt><dd>Tres, de un solo tramo</dd></div>
+            <div><dt>Fabricación</dt><dd>Impresión 3D a pequeña escala</dd></div>
+            <div><dt>Material</dt><dd>Polímero de alta resistencia</dd></div>
+            <div><dt>Transporte</dt><dd>Plegado, colgado de la mochila</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POR QUÉ DELTA: diagrama triangular ============ -->
+    <section class="why" id="diseno" data-theme="light" aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="why__head">
+          <p class="eyebrow">¿Por qué DELTA?</p>
+          <h2 class="display" id="why-title" data-split>Cambio, dirección, <strong>eficiencia</strong></h2>
+          <p class="lead reveal">La identidad formal de DELTA nace del símbolo Δ. El triángulo no solo le da nombre: responde a criterios funcionales.</p>
+        </div>
+        <div class="why__grid">
+          <div class="why__diagram">
+            <svg class="why__svg" viewBox="0 0 520 470" aria-hidden="true">
+              <path class="why__inner" d="M260 165.5 359 336.6H161z"/>
+              <path class="why__spokes" d="M260 294 260 40M260 294 40 421M260 294 480 421"/>
+              <path class="why__tri draw" pathLength="1" d="M260 40 480 421H40z"/>
+            </svg>
+            <div class="why__tabs" role="tablist" aria-label="Principios de diseño">
+              <button class="why__vertex why__vertex--a" role="tab" id="tab-forma" aria-selected="true" aria-controls="panel-forma" type="button"><i></i>Forma</button>
+              <button class="why__vertex why__vertex--b" role="tab" id="tab-ergo" aria-selected="false" aria-controls="panel-ergo" tabindex="-1" type="button"><i></i>Ergonomía</button>
+              <button class="why__vertex why__vertex--c" role="tab" id="tab-fab" aria-selected="false" aria-controls="panel-fab" tabindex="-1" type="button"><i></i>Fabricación</button>
+            </div>
+            <p class="why__center" aria-hidden="true">Una única<br>pieza</p>
+          </div>
+          <div class="why__panels">
+            <div class="why__panel is-active" role="tabpanel" id="panel-forma" aria-labelledby="tab-forma">
+              <h3>Forma</h3>
+              <p>Una geometría triangular de vértices redondeados. El triángulo proporciona una base estable, optimiza la distribución de cargas y reduce el material necesario sin comprometer la resistencia del conjunto.</p>
+              <ul class="chips"><li>Base estable</li><li>Cargas distribuidas</li><li>Menos material</li></ul>
+            </div>
+            <div class="why__panel" role="tabpanel" id="panel-ergo" aria-labelledby="tab-ergo" hidden>
+              <h3>Ergonomía</h3>
+              <p>La altura del asiento favorece una inclinación natural del tronco hacia adelante, facilita el manejo de la cámara y permite incorporarse rápido cuando la escena lo pide. La superficie acompaña la anatomía y reparte las presiones de apoyo.</p>
+              <ul class="chips"><li>280 mm de altura</li><li>Postura relajada</li><li>Incorporación rápida</li></ul>
+            </div>
+            <div class="why__panel" role="tabpanel" id="panel-fab" aria-labelledby="tab-fab" hidden>
+              <h3>Fabricación</h3>
+              <p>Impreso íntegramente en 3D en un polímero de alta resistencia. Las sustracciones estratégicas alivian el peso, reducen el consumo de material y generan zonas de agarre. Producción a pequeña escala, con bajo desperdicio.</p>
+              <ul class="chips"><li>Impresión 3D</li><li>Bajo desperdicio</li><li>Pequeña escala</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MÁS CERCA DE LO ESENCIAL: zoom al encuadre ============ -->
+    <section class="essence" data-theme="dark" aria-label="Más cerca de lo esencial">
+      <div class="essence__pin">
+        <div class="essence__frame">
+          <img src="assets/img/delta-usuario.webp" alt="" width="1362" height="1155" loading="lazy">
+        </div>
+        <p class="essence__line"><span>Más cerca</span><span>de lo esencial</span></p>
+      </div>
+    </section>
+
+    <!-- ============ PROCESO ============ -->
+    <section class="process" id="proceso" data-theme="light" aria-labelledby="process-title">
+      <div class="wrap">
+        <div class="process__head">
+          <p class="eyebrow">Proceso</p>
+          <h2 class="display" id="process-title" data-split>Del boceto <strong>al objeto</strong></h2>
+          <p class="lead reveal">Una propuesta ergonómica, liviana y de fácil transporte, pensada para la observación y la permanencia prolongada al aire libre.</p>
+        </div>
+
+        <div class="context">
+          <figure class="ctx reveal">
+            <div class="ctx__img parallax"><img src="assets/img/usuario.webp" alt="Fotógrafo de naturaleza abrigado, con un teleobjetivo sobre trípode en un paisaje nevado" width="1085" height="1183" loading="lazy"></div>
+            <figcaption><h3 class="ctx__title">Usuario</h3><p>Fotógrafos de naturaleza que esperan horas en un mismo lugar por la toma.</p></figcaption>
+          </figure>
+          <figure class="ctx reveal">
+            <div class="ctx__img parallax"><img src="assets/img/ambito.webp" alt="Cerro cubierto de bosque junto a la orilla de un río" width="900" height="1349" loading="lazy"></div>
+            <figcaption><h3 class="ctx__title">Ámbito</h3><p>Montaña, bosque y orillas de lagos y ríos: terreno irregular, lejos de todo.</p></figcaption>
+          </figure>
+          <div class="ante reveal">
+            <h3 class="ante__title">Antecedentes</h3>
+            <p>Lo que hoy acompaña al fotógrafo en el campo.</p>
+            <ul class="ante__list">
+              <li><figure><img src="assets/img/ante-silla.webp" alt="Silla plegable de camping junto a un lago" width="800" height="1200" loading="lazy"><figcaption>Silla plegable</figcaption></figure></li>
+              <li><figure><img src="assets/img/ante-taburete.webp" alt="Banqueta trípode plegable en un campo de pasto seco" width="800" height="1200" loading="lazy"><figcaption>Banqueta trípode</figcaption></figure></li>
+              <li><figure><img src="assets/img/ante-tripode.webp" alt="Dos trípodes fotográficos sobre un piso de madera" width="1200" height="800" loading="lazy"><figcaption>Trípode</figcaption></figure></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery" aria-labelledby="gallery-title">
+        <div class="wrap gallery__head">
+          <h3 class="eyebrow" id="gallery-title">Exploración · 5 etapas</h3>
+          <div class="gallery__nav">
+            <button class="round" type="button" data-dir="-1" aria-label="Etapa anterior"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg></button>
+            <button class="round" type="button" data-dir="1" aria-label="Etapa siguiente"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg></button>
+          </div>
+        </div>
+        <ol class="gallery__track" tabindex="0" aria-label="Etapas del proceso, desplazable" data-cursor="Arrastrar">
+          <li class="gallery__item"><figure class="gallery__card gallery__card--paper"><img src="assets/img/bocetos.webp" alt="Hoja de bocetos a lápiz: variantes triangulares, uniones pata-asiento y referencias de hueso y montaña" width="1050" height="960" loading="lazy"><figcaption><span>01</span><b>Bocetos</b>Exploración formal: triángulos, variantes de superficie y uniones entre pata y asiento.</figcaption></figure></li>
+          <li class="gallery__item"><figure class="gallery__card gallery__card--paper"><img src="assets/img/moodboard.webp" alt="Moodboard de DELTA: paisaje, textura del asiento, hueso, hojas, río, paleta de color y materiales" width="1100" height="1159" loading="lazy"><figcaption><span>02</span><b>Referencias</b>Hueso, hoja, río: estructuras orgánicas, ligeras y resistentes a la vez.</figcaption></figure></li>
+          <li class="gallery__item"><figure class="gallery__card"><img src="assets/img/conceptos.webp" alt="Primeros conceptos de asientos triangulares con vaciados, en boceto y en volumen" width="1536" height="1024" loading="lazy"><figcaption><span>03</span><b>Volumen</b>Primeros volúmenes pensados para impresión 3D, con el vaciado como identidad.</figcaption></figure></li>
+          <li class="gallery__item"><figure class="gallery__card gallery__card--paper"><img src="assets/img/delta-plano.webp" alt="Plano técnico: vista superior de 300 mm por lado y vista lateral abierta de 280 mm de altura" width="746" height="494" loading="lazy"><figcaption><span>04</span><b>Planos</b>Vista superior y lateral: 300 mm de lado y 280 mm de altura abierto.</figcaption></figure></li>
+          <li class="gallery__item"><figure class="gallery__card gallery__card--paper"><img src="assets/img/delta-render.webp" alt="Render final de DELTA desplegado, con patas de un solo tramo" width="754" height="524" loading="lazy"><figcaption><span>05</span><b>Render</b>El objeto final: carcasa oliva, superficie texturada y tres patas de un solo tramo.</figcaption></figure></li>
+        </ol>
+      </div>
+
+      <div class="wrap palette">
+        <h3 class="eyebrow">Paleta y materiales</h3>
+        <ul class="swatches">
+          <li style="--c:#9c8c5e"><b>Oliva</b><span>#9C8C5E</span></li>
+          <li style="--c:#1d1d1a" class="is-dark"><b>Negro</b><span>#1D1D1A</span></li>
+          <li style="--c:#55564f" class="is-dark"><b>Grafito</b><span>#55564F</span></li>
+          <li style="--c:#cdbf9f"><b>Arena</b><span>#CDBF9F</span></li>
+          <li style="--c:#f3efe6"><b>Hueso</b><span>#F3EFE6</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="finale" id="contacto" data-theme="dark" aria-labelledby="finale-title">
+      <div class="finale__glow" aria-hidden="true"></div>
+      <div class="finale__logo" aria-hidden="true">
+        <svg class="finale__mark"><use href="#delta-mark"/></svg>
+        <svg class="finale__word"><use href="#delta-word"/></svg>
+      </div>
+      <h2 class="finale__title" id="finale-title" data-split>Pequeñas soluciones para <strong>grandes experiencias</strong></h2>
+      <div class="finale__ctas reveal">
+        <a class="btn btn--light" href="Panel%20Comercial%20DELTA.pdf" target="_blank" rel="noopener">Descargar panel comercial <svg class="btn__icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1v9M2 6.5 6 10.5 10 6.5"/></svg></a>
+        <a class="btn btn--ghost" href="Presentaci%C3%B3n%20Moderna%20Planner%20Planeaci%C3%B3n%20de%20Contenido%20Estrategia%20Redes%20Marketing.pdf" target="_blank" rel="noopener">Ver presentación del proyecto <small>(PDF, 83 MB)</small></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" data-theme="dark">
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <svg class="footer__mark" aria-hidden="true"><use href="#delta-mark"/></svg>
+        <p>Asiento portátil para fotografía de naturaleza.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Pie de página">
+        <a href="#objeto">Objeto</a><a href="#despliegue">Secuencia</a><a href="#ficha">Ficha</a><a href="#diseno">Diseño</a><a href="#proceso">Proceso</a>
+      </nav>
+      <div class="footer__credits">
+        <p>Creado por <b>Jiménez Lourdes, Menoyo Eliseo, García Benjamín y Juan Francisco Laborde</b></p>
+        <p>Taller de Diseño Industrial 3B · FDA · UNLP</p>
+      </div>
+    </div>
+    <div class="wrap footer__base">
+      <p>© 2026 DELTA</p>
+      <a href="#inicio" class="footer__top">Volver arriba <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 11V2M2 5.5 6 1.5l4 4"/></svg></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
